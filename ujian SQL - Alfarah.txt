@@ -1,0 +1,26 @@
+-- 1. Tampilkan 10 kota terpadat di Indonesia.
+-- Dengan menampilkan:
+-- id kota, nama kota, country code, nama distrik, populasi
+select * from city
+where CountryCode = 'IDN' order by Population desc limit 10;
+
+-- 2. Tampilkan 10 kota terpadat di dunia.
+-- Dengan menampilkan:
+-- id kota, nama kota, distrik, populasi
+select id, name as `Nama_kota`, District, Population from city
+order by Population desc limit 10;
+
+-- 3. Tampilkan 10 negara yang menggunakan b.ing dan dipakai sebagai bahasa resmi
+-- Dengan menampilkan:
+-- kode negara, nama negara, language, isOfficial, percentage
+select co.Code, co.Name, cl.Language, cl.IsOfficial, cl.Percentage from country co
+join countrylanguage cl on co.Code = cl.CountryCode
+where Language = 'English' and isofficial = 'T' 
+order by Percentage desc limit 10;
+
+-- 4. Tampilkan 10 negara di Asia yang angka harapan hidupnya di atas rata-rata angka harapan hidup di Benua Eropa
+-- Dengan menampilkan:
+-- nama negara, nama benua, angka harapan hidup, GNP
+select Name, Continent, LifeExpectancy, GNP from country
+where Continent = 'Asia' and LifeExpectancy > (select avg(LifeExpectancy) from country
+where Continent = 'Europe') order by LifeExpectancy desc limit 10;
